@@ -1,0 +1,82 @@
+{
+  "config": {
+    "classes": "0123456789ABCDEF",
+    "dataset_split": "byclass",
+    "seed": 311,
+    "validation_fraction": 0.15,
+    "preprocessing": {
+      "version": 1,
+      "emnist_transpose": true,
+      "image_size": 16,
+      "foreground_size": 12,
+      "foreground_threshold": 16,
+      "bounding_box_padding": 1,
+      "resize": "Pillow bilinear",
+      "normalization_divisor": 256
+    },
+    "model": {
+      "hidden_units": 32,
+      "activation": "relu"
+    },
+    "training": {
+      "device": "cpu",
+      "batch_size": 128,
+      "learning_rate": 0.001,
+      "max_epochs": 50,
+      "early_stopping_patience": 8,
+      "class_weighting": "inverse_training_frequency"
+    }
+  },
+  "smoke": false,
+  "threads": 1,
+  "device": "cpu",
+  "train_count": 326480,
+  "validation_count": 57612,
+  "class_weights": [
+    0.6941184401512146,
+    0.6255748867988586,
+    0.7018539905548096,
+    0.6830811500549316,
+    0.7158393263816833,
+    0.7641177773475647,
+    0.7012750506401062,
+    0.6714158654212952,
+    0.7071810364723206,
+    0.7092457413673401,
+    3.746786594390869,
+    6.190837383270264,
+    2.3782050609588623,
+    5.261733055114746,
+    4.865283966064453,
+    2.614349603652954
+  ],
+  "selection_metric": "minimum validation weighted cross-entropy",
+  "cache_key": "0014115a6c2775f6b35d6bab5cb322c71fdad9a9a84da94f255bea5467eb8572",
+  "cache_sha256": "848453a92e52190aff3fbd07c0af3ea4cda323e7d7c82f43591670bd8cad4b94",
+  "split_sha256": "752ce02ccc158f90fad8dda771e99f048fe488a31020143949d5b1822f3e195d",
+  "source_sha256": {
+    "emnist-byclass-train-images-idx3-ubyte": "1088bfb5b0dcfc5ad650255c52f5ba6b85e1c228826628d4a1a81685ceba93bd",
+    "emnist-byclass-train-labels-idx1-ubyte": "2c05edd703ce311a0961a63e90b718c5fd02456ae81706f1753817eee522efb6"
+  },
+  "versions": {
+    "torch": "2.9.1+cpu",
+    "torchvision": "0.24.1+cpu",
+    "numpy": "2.3.5",
+    "pillow": "12.0.0",
+    "matplotlib": "3.10.7"
+  },
+  "python": "3.12.14",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "processor": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+  "code_sha256": {
+    "python/hexsight/__init__.py": "d08690f6451e4e0aa94a40cf904645b8864d97179cd1841e798f0a355ed0cdd7",
+    "python/hexsight/data.py": "77374ee5b084445f2cce968c93d1c8e8be919d01bcee2533c8fe707c9d5d4220",
+    "python/hexsight/metrics.py": "1daf83a8d971b45ab921b654a8bbd2df7947ca75ea8f5407ac61af5cb81c5f44",
+    "python/hexsight/model.py": "2363052f0a15262f1f8149894cfc52bf4164f64a50be0556492ec68f965b16c9",
+    "python/hexsight/reporting.py": "f0fbf8c45fe58b2d4cbbfc6eb6473b8b98332e095b562561dee35ae72fed6701",
+    "python/hexsight/training_data.py": "fcba727605657aac3ae9d344992bc1677ed2a6cdd1720fd4b97deb0ecf8a3440",
+    "python/prepare_data.py": "a9c3a4c71cbac4974aacea8abfa044bf54a10d92e913a874c4e1788c5bccdbdc",
+    "python/train.py": "26a5297a44398359b791c718b911dc0ca3547c9e7b04a8344f17e6bc9d969d6f"
+  },
+  "test_evaluated": false
+}

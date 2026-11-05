@@ -6,15 +6,17 @@ Recognize one handwritten character from **0-9 and uppercase A-F**. A laptop pre
 
 ## Current status
 
-**Step 1 complete: CPU environment and dataset audit.** Model training and FPGA implementation are the next milestones. No accuracy, hardware timing, or speedup results have been measured yet.
+**Step 2 complete: trained CPU baseline.** The saved 256-32-16 model achieved **95.37% validation accuracy** and **94.64% macro recall** across 57,612 validation images. A fresh process reproduced every saved prediction. Quantization and FPGA implementation are next; no test-set accuracy or hardware speedup has been measured.
 
-The initial candidate is a fully connected network:
+See [the training walkthrough](docs/step-02.md), [learning curves](results/baseline-256-32-16/learning_curves.png), and [per-class results](results/baseline-256-32-16/per_class.csv).
+
+The trained baseline is a fully connected network:
 
 ```text
 16x16 grayscale image -> 256 inputs -> 32 hidden units + ReLU -> 16 scores
 ```
 
-This is supervised classification: labeled images teach the network which character to predict. Training will run in PyTorch on the CPU. The FPGA will perform inference using exported, fixed-point weights.
+This is supervised classification: labeled images teach the network which character to predict. Training runs in PyTorch on the CPU. The FPGA will perform inference using exported, fixed-point weights.
 
 ## Milestones
 
@@ -75,9 +77,25 @@ Verified on November 5, 2026:
 | Validation | 57,612 | Choose checkpoints and model settings |
 | Test | 64,437 | Final evaluation after model selection |
 
-The classes are imbalanced. The planned training loss uses inverse training-frequency weights. Report both accuracy and per-class recall; overall accuracy alone can conceal weak letter recognition.
+The classes are imbalanced. The training loss uses inverse training-frequency weights. Report both accuracy and per-class recall; overall accuracy alone can conceal weak letter recognition.
 
 See [the first-step walkthrough](docs/step-01.md) for preprocessing details and what to inspect.
+
+## Step 2: train and verify
+
+After completing the dataset audit, use a new directory for each experiment:
+
+```powershell
+& .\.venv\Scripts\python.exe python/train.py --smoke --run-dir results/local/smoke-new
+& .\.venv\Scripts\python.exe python/train.py --run-dir results/baseline-reproduced --threads 1
+& .\.venv\Scripts\python.exe python/verify_checkpoint.py --run-dir results/baseline-reproduced
+```
+
+Pass `--data-dir` when using data outside the repository. On this workstation, the ignored `local.settings.json` records that path and the existing Python interpreter.
+
+The full run trains on 326,480 images and chooses the lowest class-weighted validation loss. The selected epoch is 47 of 50. Common confusions are 8 predicted as B and 0 predicted as D; B precision is 54.89%, so the overall accuracy should not be read as equally strong performance for every character.
+
+The model contains 8,704 weights and 48 biases. Source hashes, software versions, configuration, and predictions are saved beside the checkpoint. The official test images are not loaded by the training command.
 
 ## Initial preprocessing contract
 
@@ -96,7 +114,7 @@ The resize and model size are initial choices, to be assessed on validation data
 
 ```text
 configs/        Experiment configuration
-python/         Dataset tools and, later, training/reference code
+python/         Dataset tools, training, and checkpoint verification
 python/tests/   Software correctness checks
 rtl/            Synthesizable Verilog (upcoming)
 tb/             Verilog testbenches (upcoming)
