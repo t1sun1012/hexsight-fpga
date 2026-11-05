@@ -1,0 +1,15 @@
+{
+  "model_manifest_sha256": "193eb208a15f6a42393e7cda7986e75daa206ea96cfc1a4370f2349ca5e587e8",
+  "validation_predictions_checked": 57612,
+  "prediction_mismatches": 0,
+  "integer_logits_checked": 921792,
+  "logits_sha256_little_endian_int64": "f2afdca5afaf41b9bbc569233afbb29fe038ef048696595b2fb7267684b5cd18",
+  "source_parameter_requantization_mismatches": 0,
+  "vectors": {
+    "cases_checked": 24,
+    "intermediate_words_checked": 85080,
+    "vectorized_scalar_and_memory_mismatches": 0
+  },
+  "accuracy": 0.974692772339096,
+  "test_evaluated": false
+}

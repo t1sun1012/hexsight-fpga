@@ -92,7 +92,7 @@ Accuracy gives every image equal weight, so common digits influence it more stro
 Runtime includes epoch training, validation, and checkpoint/history writes with one CPU thread and cached preprocessed images.
 It excludes the initial dataset preprocessing and final plots. It is not an inference benchmark or an FPGA speed measurement.
 
-The held-out test set has **not** been evaluated. This checkpoint has not yet been quantized or run on hardware.
+The held-out test set has **not** been evaluated. This page reports floating-point results; [Step 3](step-03.md) records the completed fixed-point conversion. Hardware execution is still upcoming.
 
 ## Understand the mistakes
 
@@ -160,8 +160,7 @@ The current source, CNN checkpoint, and reports are published on the step-02-cnn
 ## Next checkpoint
 
 Review [the CNN comparison and verification supplement](cnn-comparison.md).
-The next implementation milestone is fixed-point CNN inference: quantize the weights, specify convolution accumulation, ReLU, pooling, flattening order, and the 392-input dense layer, then verify rounding and accumulator ranges.
-That integer Python reference will define the numerical behavior required from Verilog.
+Continue to [Step 3: fixed-point CNN inference](step-03.md) for quantized weights, exact arithmetic, accumulator proofs, and exported verification vectors. That integer Python reference defines the numerical behavior required from Verilog.
 
 ## References
 

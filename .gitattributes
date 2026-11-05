@@ -1,0 +1,12 @@
+# Baseline cache/provenance hashes use Windows source and metadata bytes.
+# Make checkout bytes consistent even when a clone has a different autocrlf setting.
+python/**/*.py text eol=crlf
+results/cnn-8filters/*.json text eol=crlf
+
+# Hardware memory files and their hashed manifests always use LF.
+model/**/*.mem text eol=lf
+model/**/*.json text eol=lf
+model/**/*.vh text eol=lf
+test_vectors/**/*.mem text eol=lf
+test_vectors/**/*.json text eol=lf
+results/fixed-point/*.json text eol=lf

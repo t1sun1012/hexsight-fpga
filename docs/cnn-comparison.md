@@ -70,8 +70,7 @@ These are arithmetic counts, not synthesis results or measured latency.
 The CNN has fewer parameters but about 2.34 times as many multiply-accumulates.
 It also needs convolution addressing, intermediate feature storage, and max-pooling control.
 
-The original project plan described an MLP. The next fixed-point milestone must now specify convolution accumulation, ReLU, pooling, channel-major flattening, and a 392-input dense layer.
-It must check accumulator ranges and rounding for this architecture instead of reusing the old dense-layer dimensions.
+The original project plan described an MLP. [Step 3](step-03.md) specifies convolution accumulation, ReLU, pooling, channel-major flattening, and the 392-input dense layer. Its range proof and scales apply to the CNN architecture.
 
 ## Run it
 
@@ -107,7 +106,7 @@ The original full MLP checkpoint also continues to reproduce all 57,612 validati
 
 ## Next milestone
 
-Implement and validate fixed-point **CNN** inference in Python, then export convolution and dense-layer weights for Verilog.
+The completed [Step 3](step-03.md) provides integer CNN inference, exported convolution/dense weights, and intermediate vectors. Step 4 will implement and simulate Verilog against those vectors.
 Neither the floating-point CNN nor the MLP has been run on the FPGA yet.
 
 ## References

@@ -1,0 +1,70 @@
+{
+  "provenance": {
+    "checkpoint_sha256": "109556fe96c39b8cdbf54eaae6a1b42bf0c344938fc8133f3ed0aeea2c6591b6",
+    "baseline_run_sha256": "68fecedb408d2fa1350e97d236b01ac13614e7e4325588fb8feed4e59c991753",
+    "selected_epoch": 46,
+    "config": {
+      "classes": "0123456789ABCDEF",
+      "dataset_split": "byclass",
+      "seed": 311,
+      "validation_fraction": 0.15,
+      "preprocessing": {
+        "version": 1,
+        "emnist_transpose": true,
+        "image_size": 16,
+        "foreground_size": 12,
+        "foreground_threshold": 16,
+        "bounding_box_padding": 1,
+        "resize": "Pillow bilinear",
+        "normalization_divisor": 256
+      },
+      "model": {
+        "type": "cnn",
+        "filters": 8,
+        "kernel_size": 3,
+        "pool_size": 2,
+        "activation": "relu"
+      },
+      "training": {
+        "device": "cpu",
+        "batch_size": 128,
+        "learning_rate": 0.001,
+        "max_epochs": 50,
+        "early_stopping_patience": 8,
+        "class_weighting": "inverse_training_frequency"
+      }
+    },
+    "split_sha256": "752ce02ccc158f90fad8dda771e99f048fe488a31020143949d5b1822f3e195d",
+    "cache_key": "0014115a6c2775f6b35d6bab5cb322c71fdad9a9a84da94f255bea5467eb8572",
+    "cache_sha256": "848453a92e52190aff3fbd07c0af3ea4cda323e7d7c82f43591670bd8cad4b94",
+    "source_sha256": {
+      "emnist-byclass-train-images-idx3-ubyte": "1088bfb5b0dcfc5ad650255c52f5ba6b85e1c228826628d4a1a81685ceba93bd",
+      "emnist-byclass-train-labels-idx1-ubyte": "2c05edd703ce311a0961a63e90b718c5fd02456ae81706f1753817eee522efb6"
+    },
+    "code_sha256": {
+      "python/hexsight/__init__.py": "d08690f6451e4e0aa94a40cf904645b8864d97179cd1841e798f0a355ed0cdd7",
+      "python/hexsight/data.py": "77374ee5b084445f2cce968c93d1c8e8be919d01bcee2533c8fe707c9d5d4220",
+      "python/hexsight/fixed_point.py": "bd27aaa4b50d7cbe1132d8180efa113eb40c7cd5f7afb4078ca30b0e9d47049b",
+      "python/hexsight/fixed_point_eval.py": "24d79beb6e05efa39d93857a5047cc1d58d5bb108ab76e0a97e4a18b8a337a8a",
+      "python/hexsight/fixed_point_io.py": "aecf98e1f8210705bc0528cbf1eef64b74678aee76096278b8ce9315ad748716",
+      "python/hexsight/metrics.py": "1daf83a8d971b45ab921b654a8bbd2df7947ca75ea8f5407ac61af5cb81c5f44",
+      "python/hexsight/model.py": "92966a9cc6fb91b1aded29a243570f09c7773ef1c05100f40d493791ffe050a5",
+      "python/hexsight/reporting.py": "6d64b84cc955b9d5c45d21fb46fb82aae9a8521a8c6bbd5bc8e117adccd624e9",
+      "python/hexsight/training_data.py": "fcba727605657aac3ae9d344992bc1677ed2a6cdd1720fd4b97deb0ecf8a3440",
+      "python/quantize.py": "2a5ed8720bdd8ab64ee3c46301fa74cc1d8e1be8e583419a099bc85a42308f5b",
+      "python/verify_fixed_point.py": "a6cfb7c2d6718e92d7fbdc9976c188e9a5ab85b5f954c43ae9d072e2f546024d"
+    },
+    "versions": {
+      "torch": "2.9.1+cpu",
+      "numpy": "2.3.5"
+    },
+    "method": "post-training quantization; no retraining; fixed formats; no test-set access"
+  },
+  "model_manifest_sha256": "193eb208a15f6a42393e7cda7986e75daa206ea96cfc1a4370f2349ca5e587e8",
+  "vector_manifest_sha256": "6cf17f3fff04ea8f8c1daa9695583a3a9ba7be832518d79ffb49acdc43566859",
+  "predictions_sha256": "6962ef74f8cb12d7441dd8a5a0ac8a67d113e0c5e877e6b791e0a7b9fda03f1e",
+  "validation_count": 57612,
+  "vector_count": 24,
+  "parameter_storage_bytes": 12784,
+  "test_evaluated": false
+}

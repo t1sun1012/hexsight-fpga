@@ -1,0 +1,267 @@
+{
+  "version": 1,
+  "model_manifest_sha256": "193eb208a15f6a42393e7cda7986e75daa206ea96cfc1a4370f2349ca5e587e8",
+  "cases": [
+    {
+      "name": "validation_0",
+      "source": "official training split / validation partition",
+      "source_index": 127272,
+      "target": 0,
+      "case_index": 0,
+      "expected_prediction": 0
+    },
+    {
+      "name": "validation_1",
+      "source": "official training split / validation partition",
+      "source_index": 56118,
+      "target": 1,
+      "case_index": 1,
+      "expected_prediction": 1
+    },
+    {
+      "name": "validation_2",
+      "source": "official training split / validation partition",
+      "source_index": 521854,
+      "target": 2,
+      "case_index": 2,
+      "expected_prediction": 2
+    },
+    {
+      "name": "validation_3",
+      "source": "official training split / validation partition",
+      "source_index": 221718,
+      "target": 3,
+      "case_index": 3,
+      "expected_prediction": 3
+    },
+    {
+      "name": "validation_4",
+      "source": "official training split / validation partition",
+      "source_index": 223113,
+      "target": 4,
+      "case_index": 4,
+      "expected_prediction": 4
+    },
+    {
+      "name": "validation_5",
+      "source": "official training split / validation partition",
+      "source_index": 414281,
+      "target": 5,
+      "case_index": 5,
+      "expected_prediction": 5
+    },
+    {
+      "name": "validation_6",
+      "source": "official training split / validation partition",
+      "source_index": 598943,
+      "target": 6,
+      "case_index": 6,
+      "expected_prediction": 6
+    },
+    {
+      "name": "validation_7",
+      "source": "official training split / validation partition",
+      "source_index": 47922,
+      "target": 7,
+      "case_index": 7,
+      "expected_prediction": 7
+    },
+    {
+      "name": "validation_8",
+      "source": "official training split / validation partition",
+      "source_index": 411163,
+      "target": 8,
+      "case_index": 8,
+      "expected_prediction": 8
+    },
+    {
+      "name": "validation_9",
+      "source": "official training split / validation partition",
+      "source_index": 485321,
+      "target": 9,
+      "case_index": 9,
+      "expected_prediction": 9
+    },
+    {
+      "name": "validation_A",
+      "source": "official training split / validation partition",
+      "source_index": 41316,
+      "target": 10,
+      "case_index": 10,
+      "expected_prediction": 10
+    },
+    {
+      "name": "validation_B",
+      "source": "official training split / validation partition",
+      "source_index": 350559,
+      "target": 11,
+      "case_index": 11,
+      "expected_prediction": 11
+    },
+    {
+      "name": "validation_C",
+      "source": "official training split / validation partition",
+      "source_index": 269471,
+      "target": 12,
+      "case_index": 12,
+      "expected_prediction": 12
+    },
+    {
+      "name": "validation_D",
+      "source": "official training split / validation partition",
+      "source_index": 631592,
+      "target": 13,
+      "case_index": 13,
+      "expected_prediction": 13
+    },
+    {
+      "name": "validation_E",
+      "source": "official training split / validation partition",
+      "source_index": 276351,
+      "target": 14,
+      "case_index": 14,
+      "expected_prediction": 14
+    },
+    {
+      "name": "validation_F",
+      "source": "official training split / validation partition",
+      "source_index": 16837,
+      "target": 15,
+      "case_index": 15,
+      "expected_prediction": 15
+    },
+    {
+      "name": "blank",
+      "source": "synthetic arithmetic input",
+      "source_index": null,
+      "target": null,
+      "case_index": 16,
+      "expected_prediction": 1
+    },
+    {
+      "name": "full_white",
+      "source": "synthetic arithmetic input",
+      "source_index": null,
+      "target": null,
+      "case_index": 17,
+      "expected_prediction": 11
+    },
+    {
+      "name": "checkerboard",
+      "source": "synthetic arithmetic input",
+      "source_index": null,
+      "target": null,
+      "case_index": 18,
+      "expected_prediction": 3
+    },
+    {
+      "name": "impulse_top_left",
+      "source": "synthetic arithmetic input",
+      "source_index": null,
+      "target": null,
+      "case_index": 19,
+      "expected_prediction": 1
+    },
+    {
+      "name": "impulse_bottom_right",
+      "source": "synthetic arithmetic input",
+      "source_index": null,
+      "target": null,
+      "case_index": 20,
+      "expected_prediction": 1
+    },
+    {
+      "name": "horizontal_ramp",
+      "source": "synthetic arithmetic input",
+      "source_index": null,
+      "target": null,
+      "case_index": 21,
+      "expected_prediction": 3
+    },
+    {
+      "name": "vertical_ramp",
+      "source": "synthetic arithmetic input",
+      "source_index": null,
+      "target": null,
+      "case_index": 22,
+      "expected_prediction": 1
+    },
+    {
+      "name": "random_seed_311",
+      "source": "synthetic arithmetic input",
+      "source_index": null,
+      "target": null,
+      "case_index": 23,
+      "expected_prediction": 11
+    }
+  ],
+  "files": {
+    "pixels": {
+      "file": "pixels.mem",
+      "bits": 8,
+      "signed": false,
+      "shape_per_case": [
+        256
+      ],
+      "words_per_case": 256,
+      "sha256": "b196b7b9f7c4a40e67fc18671fe1a84ac2b1cd92a92f2099a10006a936c78ccc"
+    },
+    "conv_acc": {
+      "file": "conv_acc.mem",
+      "bits": 40,
+      "signed": true,
+      "shape_per_case": [
+        8,
+        14,
+        14
+      ],
+      "words_per_case": 1568,
+      "sha256": "d5634ae2b3b36ad0803930ee05ad60b83fd8302fe30c719daf89c15952711781"
+    },
+    "relu": {
+      "file": "relu.mem",
+      "bits": 16,
+      "signed": true,
+      "shape_per_case": [
+        8,
+        14,
+        14
+      ],
+      "words_per_case": 1568,
+      "sha256": "1d1380d0afecf33a38b9be746008cc22c8629eb16761745d8fc1495176f65216"
+    },
+    "pool": {
+      "file": "pool.mem",
+      "bits": 16,
+      "signed": true,
+      "shape_per_case": [
+        8,
+        7,
+        7
+      ],
+      "words_per_case": 392,
+      "sha256": "c6f0effd313857269b99e795bceecb1b0a7bc73f95b7d56ef1e0b356399c877d"
+    },
+    "logits": {
+      "file": "logits.mem",
+      "bits": 40,
+      "signed": true,
+      "shape_per_case": [
+        16
+      ],
+      "words_per_case": 16,
+      "sha256": "150df97fc948b8e5eeeff5b7a059b96ad38d9357a60ced4bae37b1725eee95ea"
+    },
+    "predictions": {
+      "file": "predictions.mem",
+      "bits": 4,
+      "signed": false,
+      "shape_per_case": [],
+      "words_per_case": 1,
+      "sha256": "6e78d829e57da3ed9ccedab943627811db93dba2e9d427ff89afaaeaff840317"
+    }
+  },
+  "layout": "Cases concatenated; each case flattened in C order. Offset = case_index * words_per_case.",
+  "scalar_cross_checks": 24,
+  "test_evaluated": false
+}
