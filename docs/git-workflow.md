@@ -5,10 +5,11 @@ Publish each completed, verified project step on its own GitHub branch. Use name
 ## Current milestones
 
 - `step-01-data-setup`: repository foundation, labeled dataset audit, and preprocessing.
-- `step-02-training-baseline`: CPU MLP training, saved checkpoint, validation reports, and verification.
-- `step-03-cnn-baseline`: CNN training, validation comparison, and updated architecture.
+- `step-03-cnn-baseline`: consolidated CNN training (Step 2), comparison and verification (Step 3), and associated reports.
 
-Step 2 is based on Step 1. Compare Step 1 against main, and Step 2 against the Step 1 branch to review only the new training work. Step 3 builds on Step 2; compare against the Step 2 branch to review the CNN changes.
+Compare `step-01-data-setup` against main, and `step-03-cnn-baseline` against `step-01-data-setup` to review the training and comparison work.
+
+The earlier MLP branch has been retired. Its commits and comparison artifacts are preserved in the current CNN branch; it is no longer a branch to use as a review base.
 
 ## For subsequent steps
 

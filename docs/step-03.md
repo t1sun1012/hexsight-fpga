@@ -1,6 +1,6 @@
-# Step 3: use a compact CNN
+# Step 3: compare and verify the CNN
 
-The project now uses a convolutional neural network (CNN) as its active training configuration.
+[Step 2](step-02.md) is the main CNN training walkthrough. This document records the controlled comparison, verification, and FPGA implications.
 The original MLP checkpoint remains available as the reference for comparison.
 
 ## Architecture

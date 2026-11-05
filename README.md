@@ -8,7 +8,7 @@ Recognize one handwritten character from **0-9 and uppercase A-F**. A laptop pre
 
 **Step 3 complete: trained CNN baseline.** The active CNN achieved **97.46% validation accuracy** and **97.01% macro recall** across 57,612 validation images. It improves accuracy by 2.10 percentage points over the MLP reference. A fresh process reproduced every saved prediction.
 
-See [the CNN walkthrough](docs/step-03.md), [model comparison](results/model-comparison/README.md), and [learning curves](results/cnn-8filters/learning_curves.png).
+See [the CNN training walkthrough](docs/step-02.md), [model comparison](results/model-comparison/README.md), and [learning curves](results/cnn-8filters/learning_curves.png).
 
 ```text
 16x16 grayscale -> 3x3 Conv (8 filters) -> ReLU -> 2x2 MaxPool
@@ -22,8 +22,8 @@ This is supervised classification: labeled images teach the network which charac
 ## Milestones
 
 1. **Environment and dataset:** verify labels, orientation, preprocessing, and data partitions.
-2. **MLP reference:** train the 256-32-16 model; measure validation accuracy and per-class recall.
-3. **CNN baseline:** train the compact convolutional model and compare on the same validation data.
+2. **CNN training:** train the compact convolutional model; measure validation accuracy and per-class recall.
+3. **Comparison and verification:** reproduce the CNN predictions and compare with the earlier MLP on the same validation data.
 4. **Integer reference:** specify rounding and overflow, quantize weights, and export memory files.
 5. **Verilog inference:** compare intermediate results and predictions against the integer reference.
 6. **Board integration:** connect UART, inference, and the seven-segment display.
@@ -83,37 +83,32 @@ The classes are imbalanced. The training loss uses inverse training-frequency we
 
 See [the first-step walkthrough](docs/step-01.md) for preprocessing details and what to inspect.
 
-## Step 2: reproduce the MLP reference
+## Step 2: train and verify the CNN
 
-After completing the dataset audit, use a new directory for each experiment:
-
-```powershell
-& .\.venv\Scripts\python.exe python/train.py --config configs/baseline.json --smoke --run-dir results/local/smoke-new
-& .\.venv\Scripts\python.exe python/train.py --config configs/baseline.json --run-dir results/baseline-reproduced --threads 1
-& .\.venv\Scripts\python.exe python/verify_checkpoint.py --run-dir results/baseline-reproduced
-```
-
-Pass `--data-dir` when using data outside the repository. On this workstation, the ignored `local.settings.json` records that path and the existing Python interpreter.
-
-The full run trains on 326,480 images and chooses the lowest class-weighted validation loss. The selected epoch is 47 of 50. Common confusions are 8 predicted as B and 0 predicted as D; B precision is 54.89%, so the overall accuracy should not be read as equally strong performance for every character.
-
-The MLP reference contains 8,704 weights and 48 biases. Source hashes, software versions, configuration, and predictions are saved beside the checkpoint. The official test images are not loaded by the training command.
-
-## Step 3: train and verify the CNN
-
-The default training configuration is now configs/cnn.json. Run an experiment in a new directory:
+Use the CNN configuration and a new directory for each training experiment:
 
 ```powershell
+& .\.venv\Scripts\python.exe python/train.py --config configs/cnn.json --smoke --run-dir results/local/cnn-smoke-new
 & .\.venv\Scripts\python.exe python/train.py --config configs/cnn.json --run-dir results/cnn-reproduced --threads 1
 & .\.venv\Scripts\python.exe python/verify_checkpoint.py --run-dir results/cnn-reproduced
+```
+
+The CNN uses eight 3x3 filters, ReLU, 2x2 max pooling, and a 16-output dense layer. It has 6,368 parameters.
+The selected checkpoint is epoch 46 of 50, with 97.46% validation accuracy and 97.01% macro recall.
+See [Step 2](docs/step-02.md) for training, checkpoint selection, error analysis, and reproduction instructions.
+
+Pass `--data-dir` when the dataset is outside the repository. On this workstation, the ignored `local.settings.json` records the dataset location and existing Python interpreter.
+
+## Step 3: compare and verify the CNN
+
+```powershell
 & .\.venv\Scripts\python.exe python/compare_models.py --cnn-dir results/cnn-reproduced --output-dir results/comparison-reproduced
 ```
 
-The CNN has 6,368 parameters and uses eight 3x3 filters, ReLU, max pooling, and a 16-output dense layer.
-It reduces 8-to-B validation errors from 233 to 105, and 0-to-D errors from 232 to 190.
+The earlier MLP results remain available as comparison evidence. The CNN reduces 8-to-B validation errors from 233 to 105, and 0-to-D errors from 232 to 190.
 It needs about 2.34 times as many multiply-accumulate operations as the MLP, plus pooling and intermediate feature storage.
 
-See [Step 3](docs/step-03.md) for the fixed-point/Verilog implications and [the comparison report](results/model-comparison/README.md) for metrics and limitations.
+See [Step 3](docs/step-03.md) for the comparison controls and FPGA implications, and [the comparison report](results/model-comparison/README.md) for measured results.
 
 ## Initial preprocessing contract
 

@@ -72,7 +72,7 @@ The five tests pass. CPU PyTorch import, matrix multiplication, and dependency c
 
 ## Next checkpoint
 
-Implement the 256-input, 32-hidden-unit, 16-output neural network and a reproducible CPU training loop.
+Follow [Step 2](step-02.md) to train the compact CNN with eight 3x3 filters, ReLU, max pooling, and 16 output scores.
 Start with a short training smoke run, then train with early stopping on validation data.
 Save the best checkpoint, learning curves, and a validation confusion matrix.
 

@@ -45,4 +45,4 @@ Recorded November 5, 2026. Validation results only; final test set not evaluated
 
 Checkpoint SHA-256: `7dea434bf293fb7bedf583a0dcee2a5f9d7e4d8dfc7b8c05d4208c3bde02417d`.
 
-See [Step 2](../../docs/step-02.md) for commands, interpretation, and limitations.
+This is the historical MLP reference. See [Step 3](../../docs/step-03.md) and [the model comparison](../model-comparison/README.md) for interpretation and limitations. To reproduce this MLP, run `python python/train.py --config configs/baseline.json --run-dir results/mlp-reproduced --threads 1` using the project Python environment.
