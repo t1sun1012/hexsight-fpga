@@ -1,0 +1,28 @@
+{
+  "classes": "0123456789ABCDEF",
+  "dataset_split": "byclass",
+  "seed": 311,
+  "validation_fraction": 0.15,
+  "preprocessing": {
+    "version": 1,
+    "emnist_transpose": true,
+    "image_size": 16,
+    "foreground_size": 12,
+    "foreground_threshold": 16,
+    "bounding_box_padding": 1,
+    "resize": "Pillow bilinear",
+    "normalization_divisor": 256
+  },
+  "model": {
+    "hidden_units": 32,
+    "activation": "relu"
+  },
+  "training": {
+    "device": "cpu",
+    "batch_size": 128,
+    "learning_rate": 0.001,
+    "max_epochs": 50,
+    "early_stopping_patience": 8,
+    "class_weighting": "inverse_training_frequency"
+  }
+}

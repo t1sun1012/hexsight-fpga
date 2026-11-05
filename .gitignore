@@ -1,0 +1,31 @@
+# Local datasets, environments, and generated experiments
+.venv/
+venv/
+data/
+runs/
+results/local/
+local.settings.json
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Vivado generated files
+.Xil/
+*.jou
+*.log
+*.str
+*.cache/
+*.gen/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.sim/
+*.bit
+*.bin
+
+# Course handouts remain local references
+/EC311_Fall2026_Project.pdf
+/PreLab_Fall2026.docx.pdf
+.DS_Store
+Thumbs.db
+.vscode/
