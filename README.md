@@ -6,7 +6,7 @@ Recognize one handwritten character from **0-9 and uppercase A-F**. A laptop pre
 
 ## Current status
 
-**Step 3 complete: trained CNN baseline.** The active CNN achieved **97.46% validation accuracy** and **97.01% macro recall** across 57,612 validation images. It improves accuracy by 2.10 percentage points over the MLP reference. A fresh process reproduced every saved prediction.
+**Step 2 complete: trained CNN baseline.** The active CNN achieved **97.46% validation accuracy** and **97.01% macro recall** across 57,612 validation images. It improves accuracy by 2.10 percentage points over the MLP reference. A fresh process reproduced every saved prediction.
 
 See [the CNN training walkthrough](docs/step-02.md), [model comparison](results/model-comparison/README.md), and [learning curves](results/cnn-8filters/learning_curves.png).
 
@@ -22,12 +22,11 @@ This is supervised classification: labeled images teach the network which charac
 ## Milestones
 
 1. **Environment and dataset:** verify labels, orientation, preprocessing, and data partitions.
-2. **CNN training:** train the compact convolutional model; measure validation accuracy and per-class recall.
-3. **Comparison and verification:** reproduce the CNN predictions and compare with the earlier MLP on the same validation data.
-4. **Integer reference:** specify rounding and overflow, quantize weights, and export memory files.
-5. **Verilog inference:** compare intermediate results and predictions against the integer reference.
-6. **Board integration:** connect UART, inference, and the seven-segment display.
-7. **Evaluation and release:** test held-out images, benchmark fairly, and prepare the course demo.
+2. **CNN training and verification:** train the convolutional model, reproduce predictions, and compare against the earlier MLP.
+3. **Integer reference:** specify rounding and overflow, quantize weights, and export memory files.
+4. **Verilog inference:** compare intermediate results and predictions against the integer reference.
+5. **Board integration:** connect UART, inference, and the seven-segment display.
+6. **Evaluation and release:** test held-out images, benchmark fairly, and prepare the course demo.
 
 We finish and review each checkpoint before moving to the next one.
 
@@ -99,7 +98,7 @@ See [Step 2](docs/step-02.md) for training, checkpoint selection, error analysis
 
 Pass `--data-dir` when the dataset is outside the repository. On this workstation, the ignored `local.settings.json` records the dataset location and existing Python interpreter.
 
-## Step 3: compare and verify the CNN
+## CNN comparison (part of Step 2)
 
 ```powershell
 & .\.venv\Scripts\python.exe python/compare_models.py --cnn-dir results/cnn-reproduced --output-dir results/comparison-reproduced
@@ -108,7 +107,7 @@ Pass `--data-dir` when the dataset is outside the repository. On this workstatio
 The earlier MLP results remain available as comparison evidence. The CNN reduces 8-to-B validation errors from 233 to 105, and 0-to-D errors from 232 to 190.
 It needs about 2.34 times as many multiply-accumulate operations as the MLP, plus pooling and intermediate feature storage.
 
-See [Step 3](docs/step-03.md) for the comparison controls and FPGA implications, and [the comparison report](results/model-comparison/README.md) for measured results.
+See [The comparison supplement](docs/cnn-comparison.md) for the comparison controls and FPGA implications, and [the comparison report](results/model-comparison/README.md) for measured results.
 
 ## Initial preprocessing contract
 

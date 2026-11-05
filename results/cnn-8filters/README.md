@@ -53,4 +53,4 @@ Runtime includes epoch training, validation, and checkpoint/history writes with 
 
 Checkpoint SHA-256: `109556fe96c39b8cdbf54eaae6a1b42bf0c344938fc8133f3ed0aeea2c6591b6`.
 
-See [Step 3](../../docs/step-03.md) for the architecture, reproduction commands, and FPGA implications.
+See [the CNN comparison supplement](../../docs/cnn-comparison.md) for the architecture, reproduction commands, and FPGA implications.

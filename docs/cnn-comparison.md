@@ -1,4 +1,4 @@
-# Step 3: compare and verify the CNN
+# CNN comparison and verification (Step 2 supplement)
 
 [Step 2](step-02.md) is the main CNN training walkthrough. This document records the controlled comparison, verification, and FPGA implications.
 The original MLP checkpoint remains available as the reference for comparison.

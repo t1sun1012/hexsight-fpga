@@ -1,7 +1,7 @@
 # Step 2: train the CNN on the CPU
 
 Updated November 5, 2026. This walkthrough uses the project's active convolutional neural network (CNN).
-The trained checkpoint has been independently verified. The earlier MLP is retained as a comparison experiment; [Step 3](step-03.md) records that comparison.
+The trained checkpoint has been independently verified. The earlier MLP is retained as a comparison experiment; [The comparison supplement](cnn-comparison.md) records that comparison.
 
 ## What the neural network does
 
@@ -108,7 +108,7 @@ These weaknesses are important even with high overall accuracy.
 
 See the [CNN confusion matrix](../results/cnn-8filters/confusion_matrix.png) and [example mistakes](../results/cnn-8filters/validation_errors.png).
 The gallery shows the first mistake for each true class in frozen validation order.
-[Step 3](step-03.md) compares these results with the MLP on the same images.
+[The comparison supplement](cnn-comparison.md) compares these results with the MLP on the same images.
 
 ## Reproduce the run
 
@@ -155,11 +155,11 @@ They cover preprocessing, class weighting, metric calculations, hand-computed co
 The short smoke run reduced validation loss, and a fresh process reproduced every prediction from the selected full CNN checkpoint.
 
 The checkpoint contains a state_dict and configuration. Its loader explicitly uses weights_only=True.
-The current source, CNN checkpoint, and reports are published on the step-03-cnn-baseline branch, which consolidates the training work.
+The current source, CNN checkpoint, and reports are published on the step-02-cnn-baseline branch, which consolidates the training work.
 
 ## Next checkpoint
 
-Review [Step 3: CNN comparison and verification](step-03.md).
+Review [the CNN comparison and verification supplement](cnn-comparison.md).
 The next implementation milestone is fixed-point CNN inference: quantize the weights, specify convolution accumulation, ReLU, pooling, flattening order, and the 392-input dense layer, then verify rounding and accumulator ranges.
 That integer Python reference will define the numerical behavior required from Verilog.
 
