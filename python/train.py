@@ -16,7 +16,7 @@ import torch
 import torch.nn.functional as F
 
 from hexsight.metrics import classification_metrics, inverse_frequency_weights
-from hexsight.model import build_model
+from hexsight.model import architecture_details, build_model
 from hexsight.reporting import plot_results
 from hexsight.training_data import load_training_data, sha256_file
 
@@ -50,10 +50,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-dir", type=Path)
     parser.add_argument("--audit-dir", type=Path, default=REPO / "results/data_audit")
-    parser.add_argument("--config", type=Path, default=REPO / "configs/baseline.json")
+    parser.add_argument("--config", type=Path, default=REPO / "configs/cnn.json")
     parser.add_argument("--run-dir", type=Path, required=True, help="New directory for this experiment")
     parser.add_argument("--epochs", type=int, help="Override the configured maximum epochs")
-    parser.add_argument("--threads", type=int, default=1, help="CPU threads (small dense layers need few)")
+    parser.add_argument("--threads", type=int, default=1, help="CPU threads; recorded for reproducibility")
     parser.add_argument("--smoke", action="store_true", help="3 epochs on 256 train / 64 validation examples per class")
     args = parser.parse_args()
     if args.run_dir.exists() and any(args.run_dir.iterdir()):
@@ -95,10 +95,12 @@ def main():
     val_labels = torch.from_numpy(data["val_labels"])
     weights = inverse_frequency_weights(train_labels, len(classes))
     model = build_model(config)
+    architecture = architecture_details(model)
     optimizer = torch.optim.Adam(model.parameters(), lr=config["training"]["learning_rate"], foreach=False)
     generator = torch.Generator().manual_seed(seed)
     args.run_dir.mkdir(parents=True, exist_ok=True)
     provenance = {
+        "architecture": architecture,
         "config": config, "smoke": args.smoke, "threads": args.threads, "device": "cpu",
         "train_count": len(train_labels), "validation_count": len(val_labels),
         "class_weights": weights.tolist(), "selection_metric": "minimum validation weighted cross-entropy",
@@ -176,6 +178,7 @@ def main():
     if args.smoke and metrics["weighted_loss"] >= initial["weighted_loss"]:
         raise RuntimeError("Smoke run did not reduce validation loss")
     metrics.update({
+        "architecture": architecture,
         "best_epoch": best_epoch, "epochs_completed": len(history), "initial_validation": initial,
         "parameters": sum(p.numel() for p in model.parameters()),
         "weights": sum(p.numel() for name, p in model.named_parameters() if name.endswith("weight")),
@@ -190,7 +193,7 @@ def main():
         writer.writerows(metrics["per_class"])
     np.savez_compressed(args.run_dir / "validation_predictions.npz",
                         source_indices=data["val_indices"], targets=data["val_labels"], predictions=predictions)
-    plot_results(history, metrics, data["val_pixels"], predictions, data["val_labels"], classes, best_epoch, args.run_dir)
+    plot_results(history, metrics, data["val_pixels"], predictions, data["val_labels"], classes, best_epoch, args.run_dir, model_name=architecture["type"].upper())
     print(f"Best epoch {best_epoch}: accuracy {metrics['accuracy']:.2%}, macro recall {metrics['macro_recall']:.2%}", flush=True)
     print(f"Checkpoint reload verified. Saved results to {args.run_dir}", flush=True)
 

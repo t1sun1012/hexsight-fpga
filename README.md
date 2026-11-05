@@ -6,26 +6,28 @@ Recognize one handwritten character from **0-9 and uppercase A-F**. A laptop pre
 
 ## Current status
 
-**Step 2 complete: trained CPU baseline.** The saved 256-32-16 model achieved **95.37% validation accuracy** and **94.64% macro recall** across 57,612 validation images. A fresh process reproduced every saved prediction. Quantization and FPGA implementation are next; no test-set accuracy or hardware speedup has been measured.
+**Step 3 complete: trained CNN baseline.** The active CNN achieved **97.46% validation accuracy** and **97.01% macro recall** across 57,612 validation images. It improves accuracy by 2.10 percentage points over the MLP reference. A fresh process reproduced every saved prediction.
 
-See [the training walkthrough](docs/step-02.md), [learning curves](results/baseline-256-32-16/learning_curves.png), and [per-class results](results/baseline-256-32-16/per_class.csv).
-
-The trained baseline is a fully connected network:
+See [the CNN walkthrough](docs/step-03.md), [model comparison](results/model-comparison/README.md), and [learning curves](results/cnn-8filters/learning_curves.png).
 
 ```text
-16x16 grayscale image -> 256 inputs -> 32 hidden units + ReLU -> 16 scores
+16x16 grayscale -> 3x3 Conv (8 filters) -> ReLU -> 2x2 MaxPool
+               -> Flatten (392) -> Linear (16 scores) -> argmax
 ```
+
+Quantization and Verilog implementation are next. The official test set remains unused, and no FPGA speedup has been measured.
 
 This is supervised classification: labeled images teach the network which character to predict. Training runs in PyTorch on the CPU. The FPGA will perform inference using exported, fixed-point weights.
 
 ## Milestones
 
 1. **Environment and dataset:** verify labels, orientation, preprocessing, and data partitions.
-2. **Python baseline:** train the 256-32-16 model; measure validation accuracy and per-class recall.
-3. **Integer reference:** specify rounding and overflow, quantize weights, and export memory files.
-4. **Verilog inference:** compare intermediate results and predictions against the integer reference.
-5. **Board integration:** connect UART, inference, and the seven-segment display.
-6. **Evaluation and release:** test held-out images, benchmark fairly, and prepare the course demo.
+2. **MLP reference:** train the 256-32-16 model; measure validation accuracy and per-class recall.
+3. **CNN baseline:** train the compact convolutional model and compare on the same validation data.
+4. **Integer reference:** specify rounding and overflow, quantize weights, and export memory files.
+5. **Verilog inference:** compare intermediate results and predictions against the integer reference.
+6. **Board integration:** connect UART, inference, and the seven-segment display.
+7. **Evaluation and release:** test held-out images, benchmark fairly, and prepare the course demo.
 
 We finish and review each checkpoint before moving to the next one.
 
@@ -81,13 +83,13 @@ The classes are imbalanced. The training loss uses inverse training-frequency we
 
 See [the first-step walkthrough](docs/step-01.md) for preprocessing details and what to inspect.
 
-## Step 2: train and verify
+## Step 2: reproduce the MLP reference
 
 After completing the dataset audit, use a new directory for each experiment:
 
 ```powershell
-& .\.venv\Scripts\python.exe python/train.py --smoke --run-dir results/local/smoke-new
-& .\.venv\Scripts\python.exe python/train.py --run-dir results/baseline-reproduced --threads 1
+& .\.venv\Scripts\python.exe python/train.py --config configs/baseline.json --smoke --run-dir results/local/smoke-new
+& .\.venv\Scripts\python.exe python/train.py --config configs/baseline.json --run-dir results/baseline-reproduced --threads 1
 & .\.venv\Scripts\python.exe python/verify_checkpoint.py --run-dir results/baseline-reproduced
 ```
 
@@ -95,7 +97,23 @@ Pass `--data-dir` when using data outside the repository. On this workstation, t
 
 The full run trains on 326,480 images and chooses the lowest class-weighted validation loss. The selected epoch is 47 of 50. Common confusions are 8 predicted as B and 0 predicted as D; B precision is 54.89%, so the overall accuracy should not be read as equally strong performance for every character.
 
-The model contains 8,704 weights and 48 biases. Source hashes, software versions, configuration, and predictions are saved beside the checkpoint. The official test images are not loaded by the training command.
+The MLP reference contains 8,704 weights and 48 biases. Source hashes, software versions, configuration, and predictions are saved beside the checkpoint. The official test images are not loaded by the training command.
+
+## Step 3: train and verify the CNN
+
+The default training configuration is now configs/cnn.json. Run an experiment in a new directory:
+
+```powershell
+& .\.venv\Scripts\python.exe python/train.py --config configs/cnn.json --run-dir results/cnn-reproduced --threads 1
+& .\.venv\Scripts\python.exe python/verify_checkpoint.py --run-dir results/cnn-reproduced
+& .\.venv\Scripts\python.exe python/compare_models.py --cnn-dir results/cnn-reproduced --output-dir results/comparison-reproduced
+```
+
+The CNN has 6,368 parameters and uses eight 3x3 filters, ReLU, max pooling, and a 16-output dense layer.
+It reduces 8-to-B validation errors from 233 to 105, and 0-to-D errors from 232 to 190.
+It needs about 2.34 times as many multiply-accumulate operations as the MLP, plus pooling and intermediate feature storage.
+
+See [Step 3](docs/step-03.md) for the fixed-point/Verilog implications and [the comparison report](results/model-comparison/README.md) for metrics and limitations.
 
 ## Initial preprocessing contract
 

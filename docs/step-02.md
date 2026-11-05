@@ -94,8 +94,8 @@ From the repository root, using the environment created in Step 1:
 $HexSightPython = '.\.venv\Scripts\python.exe'
 & $HexSightPython -m pip install -r requirements-lock.txt
 & $HexSightPython -m unittest discover -s python/tests -v
-& $HexSightPython python/train.py --smoke --run-dir results/local/smoke-new
-& $HexSightPython python/train.py --run-dir results/baseline-reproduced --threads 1
+& $HexSightPython python/train.py --config configs/baseline.json --smoke --run-dir results/local/smoke-new
+& $HexSightPython python/train.py --config configs/baseline.json --run-dir results/baseline-reproduced --threads 1
 & $HexSightPython python/verify_checkpoint.py --run-dir results/baseline-reproduced
 ```
 

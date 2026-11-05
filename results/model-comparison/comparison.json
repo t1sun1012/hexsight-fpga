@@ -1,0 +1,81 @@
+{
+  "comparison": "Single-seed validation comparison; no FPGA latency or final test evaluation.",
+  "validation_count": 57612,
+  "seed": 311,
+  "controls_verified": true,
+  "test_evaluated": false,
+  "accuracy_gain_percentage_points": 2.0985211414288663,
+  "macro_recall_gain_percentage_points": 2.3692696027133198,
+  "mlp_only_correct": 534,
+  "cnn_only_correct": 1743,
+  "both_correct": 54408,
+  "both_wrong": 927,
+  "models": {
+    "mlp": {
+      "accuracy": 0.9536554884399083,
+      "macro_recall": 0.9464145034040581,
+      "macro_f1": 0.919011338993581,
+      "weighted_loss": 0.18539048830391533,
+      "best_epoch": 47,
+      "epochs_completed": 50,
+      "training_seconds": 61.713074600091204,
+      "checkpoint_sha256": "7dea434bf293fb7bedf583a0dcee2a5f9d7e4d8dfc7b8c05d4208c3bde02417d",
+      "architecture": {
+        "parameters": 8752,
+        "weights": 8704,
+        "mac_count_note": "Arithmetic estimate; excludes bias adds, ReLU, pooling, and memory/control overhead.",
+        "type": "mlp",
+        "macs_per_image": 8704,
+        "pool_comparisons_per_image": 0
+      }
+    },
+    "cnn": {
+      "accuracy": 0.974640699854197,
+      "macro_recall": 0.9701071994311913,
+      "macro_f1": 0.9552444930298807,
+      "weighted_loss": 0.1006347836714506,
+      "best_epoch": 46,
+      "epochs_completed": 50,
+      "training_seconds": 392.2863680999726,
+      "checkpoint_sha256": "109556fe96c39b8cdbf54eaae6a1b42bf0c344938fc8133f3ed0aeea2c6591b6",
+      "architecture": {
+        "parameters": 6368,
+        "weights": 6344,
+        "mac_count_note": "Arithmetic estimate; excludes bias adds, ReLU, pooling, and memory/control overhead.",
+        "type": "cnn",
+        "input_shape_chw": [
+          1,
+          16,
+          16
+        ],
+        "convolution_shape_chw": [
+          8,
+          14,
+          14
+        ],
+        "pooled_shape_chw": [
+          8,
+          7,
+          7
+        ],
+        "flattened_features": 392,
+        "macs_per_image": 20384,
+        "pool_comparisons_per_image": 1176
+      }
+    }
+  },
+  "key_confusions": [
+    {
+      "true": "8",
+      "predicted": "B",
+      "mlp_count": 233,
+      "cnn_count": 105
+    },
+    {
+      "true": "0",
+      "predicted": "D",
+      "mlp_count": 232,
+      "cnn_count": 190
+    }
+  ]
+}

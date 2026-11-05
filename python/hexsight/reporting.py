@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot_results(history, metrics, pixels, predictions, targets, classes, best_epoch, run_dir):
+def plot_results(history, metrics, pixels, predictions, targets, classes, best_epoch, run_dir, model_name="MLP"):
     plt.rcParams.update({"font.size": 10, "axes.spines.top": False, "axes.spines.right": False})
     epochs = [row["epoch"] for row in history]
     fig, axes = plt.subplots(1, 2, figsize=(11, 4), layout="constrained")
@@ -22,7 +22,7 @@ def plot_results(history, metrics, pixels, predictions, targets, classes, best_e
     for axis in axes:
         axis.axvline(best_epoch, color="#64748b", ls="--", lw=1, label="Saved checkpoint")
         axis.grid(alpha=0.2)
-    fig.suptitle(f"HexSight CPU baseline | best validation loss at epoch {best_epoch}")
+    fig.suptitle(f"HexSight {model_name} CPU baseline | best validation loss at epoch {best_epoch}")
     fig.savefig(run_dir / "learning_curves.png", dpi=160)
     plt.close(fig)
 

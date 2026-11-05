@@ -1,0 +1,8 @@
+{
+  "checkpoint_sha256": "109556fe96c39b8cdbf54eaae6a1b42bf0c344938fc8133f3ed0aeea2c6591b6",
+  "validation_predictions_checked": 57612,
+  "mismatches": 0,
+  "accuracy": 0.974640699854197,
+  "macro_recall": 0.9701071994311913,
+  "test_evaluated": false
+}
