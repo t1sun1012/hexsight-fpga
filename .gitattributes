@@ -10,3 +10,7 @@ model/**/*.vh text eol=lf
 test_vectors/**/*.mem text eol=lf
 test_vectors/**/*.json text eol=lf
 results/fixed-point/*.json text eol=lf
+
+# Keep raw tool-report bytes, including generated whitespace, for provenance.
+results/rtl-inference/** -text -whitespace
+results/rtl-inference/README.md text eol=lf whitespace=blank-at-eol,blank-at-eof,space-before-tab

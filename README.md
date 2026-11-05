@@ -6,16 +6,16 @@ Recognize one handwritten character from **0-9 and uppercase A-F**. A laptop pre
 
 ## Current status
 
-**Step 3 complete: fixed-point CNN reference and FPGA exports.** The exported integer CNN achieved **97.469% validation accuracy** and **97.014% macro recall** across 57,612 images. It agrees with the floating-point CNN on 99.986% of predictions, with no activation saturation. A fresh process reproduced every integer output score.
+**Step 4 complete: verified Verilog CNN inference.** RTL simulation matches all **88,625 intermediate/output values** across 25 inferences, including all 24 frozen reference cases and a repeat. The core uses one shared signed MAC and completes each inference in **69,433 clock cycles**. Synthesis uses **1 DSP and 5.5 block-RAM tiles**; internal routed timing passes at 100 MHz. Full board/port timing remains open.
 
-See [the fixed-point walkthrough](docs/step-03.md), [validation report](results/fixed-point/README.md), [FPGA memory files](model/cnn-fixed-point/README.md), and [RTL test vectors](test_vectors/cnn-fixed-point/README.md).
+See [the RTL walkthrough](docs/step-04.md), [RTL verification and synthesis evidence](results/rtl-inference/README.md), and [the fixed-point contract](docs/step-03.md).
 
 ```text
 16x16 grayscale -> 3x3 Conv (8 filters) -> ReLU -> 2x2 MaxPool
                -> Flatten (392) -> Linear (16 scores) -> argmax
 ```
 
-Verilog implementation and simulation are next. The official test set remains unused, and no FPGA speedup has been measured.
+UART/display integration and complete board timing are next. The official test set remains unused, and the board has not yet been programmed. No CPU speedup is claimed.
 
 This is supervised classification: labeled images teach the network which character to predict. Training runs in PyTorch on the CPU. The FPGA will perform inference using exported, fixed-point weights.
 
@@ -24,7 +24,7 @@ This is supervised classification: labeled images teach the network which charac
 1. **Environment and dataset:** verify labels, orientation, preprocessing, and data partitions.
 2. **CNN training and verification:** train the convolutional model, reproduce predictions, and compare against the earlier MLP.
 3. **Integer reference:** specify rounding and overflow, quantize weights, verify accuracy, and export memory files and intermediate vectors.
-4. **Verilog inference:** compare intermediate results and predictions against the integer reference.
+4. **Verilog inference:** implement the datapath, compare every intermediate stage, and assess standalone resources/internal timing.
 5. **Board integration:** connect UART, inference, and the seven-segment display.
 6. **Evaluation and release:** test held-out images, benchmark fairly, and prepare the course demo.
 
@@ -124,6 +124,18 @@ All 26 tests pass. Verification covers the exported parameters, 57,612 predictio
 
 See [Step 3](docs/step-03.md) for equations, overflow proofs, memory addresses, reproduction commands, and next steps for RTL. No FPGA speedup or synthesis result is claimed yet.
 
+## Step 4: simulate and synthesize the RTL
+
+```powershell
+& .\.venv\Scripts\python.exe python/run_rtl.py --results-dir results/rtl-reproduced
+```
+
+The runner uses Vivado from local.settings.json or --vivado. It stages builds on a local drive, checks the exported weights/vectors, runs arithmetic and full-CNN testbenches, and synthesizes/routes the standalone core. Raw EMNIST data is not needed.
+
+The measured 69,433-cycle latency corresponds to 694.33 microseconds of core computation at 100 MHz, excluding input transfer. Standalone port timing is not closed; the [report](results/rtl-inference/README.md) distinguishes internal timing from the boundary paths that require board integration.
+
+See [Step 4](docs/step-04.md) for the input handshake, reset behavior, state-machine schedule, verification coverage, and reproduction details.
+
 ## Initial preprocessing contract
 
 1. Select the requested class names from EMNIST ByClass.
@@ -141,11 +153,12 @@ The resize and model size are initial choices, to be assessed on validation data
 
 ```text
 configs/        Experiment configuration
-python/         Dataset tools, training, fixed-point inference, and verification
+python/         Dataset tools, training, fixed-point inference, and RTL runner
 python/tests/   Software correctness checks
-rtl/            Synthesizable Verilog (upcoming)
-tb/             Verilog testbenches (upcoming)
-constraints/    Board pin and timing constraints (upcoming)
+rtl/            Synthesizable CNN, shared MAC, activation, and argmax
+tb/             Self-checking arithmetic and full-CNN SystemVerilog testbenches
+constraints/    Standalone core timing; board pin constraints upcoming
+scripts/        Vivado core synthesis and routing Tcl
 model/          Verified fixed-point weights, biases, and Verilog constants
 test_vectors/   Input and intermediate memory files for RTL verification
 results/        Small, reproducible evidence and reports

@@ -1,0 +1,72 @@
+{
+  "vivado_version": "vivado v2024.1 (64-bit)\nTool Version Limit: 2024.05\nSW Build 5076996 on Wed May 22 18:37:14 MDT 2024\nIP Build 5075265 on Wed May 22 21:45:21 MDT 2024\nSharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024\nCopyright 1986-2022 Xilinx, Inc. All Rights Reserved.\nCopyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.",
+  "mode": "all",
+  "model_manifest_sha256": "193eb208a15f6a42393e7cda7986e75daa206ea96cfc1a4370f2349ca5e587e8",
+  "vector_manifest_sha256": "6cf17f3fff04ea8f8c1daa9695583a3a9ba7be832518d79ffb49acdc43566859",
+  "source_sha256_lf": {
+    "rtl/hexsight_mac.v": "581e743f274e3698c864e4fe0e4e0ca2f67d207f7e5831af387a414bb98b3cba",
+    "rtl/hexsight_relu.v": "2d59257990d143d86a96116f70aef0d76850942ce07456324f6841ba7773fea0",
+    "rtl/hexsight_argmax.v": "bc896b53f6f8f6849132b460816cbb2a34d751cc0342279559d90518e743051f",
+    "rtl/hexsight_cnn.v": "97858cbfd89155d42754969662860fe124adcd258c13be22d795b3ca7c55dac2",
+    "tb/tb_fixed_arithmetic.sv": "3762429a4e5025d691e496fdabd61fa842f1f2eae242cfda85f9c41037a44508",
+    "tb/tb_hexsight_cnn.sv": "867e88ad04b123417d3c1609b987231416d1e5e228fbf86e2a105d75687c0420",
+    "scripts/synth_core.tcl": "f2be43335f870f0778912a252ddf25545a01f6da4870bc73d4e6db1d2d0c980a",
+    "constraints/core_ooc.xdc": "a4318acd3d84d1848518ebff22bd4600331461bb2548fd75adbd136b82deb32f",
+    "python/run_rtl.py": "2f59b0d00be1a85e31e07fb8e2c1319b61895b1c52d94c16cebab31538af6e4d"
+  },
+  "source_hash_note": "Source CRLF is normalized to LF before hashing and staging.",
+  "python_vector_verification": {
+    "cases_checked": 24,
+    "intermediate_words_checked": 85080,
+    "vectorized_scalar_and_memory_mismatches": 0
+  },
+  "arithmetic": {
+    "relu_checks": 12,
+    "mac_checks": 3,
+    "argmax_checks": 2,
+    "reset_checks": 1,
+    "passed": true
+  },
+  "cnn": {
+    "unique_cases": 24,
+    "completed_inferences": 25,
+    "reset_abort_checks": 3,
+    "words_compared": 88625,
+    "cycles_per_inference": 69433,
+    "passed": true
+  },
+  "synthesis": {
+    "part": "xc7a100tcsg324-1",
+    "mode": "out_of_context_routed",
+    "clock_period_ns": 10.0,
+    "clock_uncertainty_ns": 0.1,
+    "input_output_max_delay_ns": 2.0,
+    "input_output_min_delay_ns": 0.5,
+    "internal_setup_slack_ns": 3.094,
+    "internal_hold_slack_ns": 0.057,
+    "all_paths_setup_slack_ns": 0.504,
+    "all_paths_hold_slack_ns": -0.687,
+    "boundary_timing_closed": false,
+    "dsp48e1": 1,
+    "ramb36e1": 5,
+    "ramb18e1": 1,
+    "lut_primitives": 480,
+    "flip_flops": 244
+  },
+  "report_sha256": {
+    "arithmetic_results.json": "20f5695fc8063704f407aa0492ad533d27604ed56d9bb5f75b7af9ed003482e4",
+    "cnn_results.json": "578a30fd42e458c69f4fb477e04a4dc91721eb79fc98f24ee2e12a730bae5231",
+    "rtl_cases.csv": "fc5dda29926251ca1468de875cc374e9a13a15b375568976bc838e7b1a45ebca",
+    "synthesis_results.json": "52f00e5ec03462ba3566ac33f6e6123ec10cfdda9511b97c8030bc07e921007f",
+    "synthesis_utilization.rpt": "e25aa414ea6d0b69cfd3ad58b3f0a59cec4238da097e5c647dcbcc349ff5980e",
+    "routed_utilization.rpt": "7a8c1440d1f8ed77baa25a3b4cea99a29a169c9a8aee10aa48e599272da6286f",
+    "routed_timing.rpt": "f5fb90e4484c663f642d695a3c5ae4670f80cc9ebc4f28e9c9869c95741cd395",
+    "internal_timing.rpt": "df344bf3fac2ac9dc07f2de59c8f4ba44e1923e4a99b05467d7b0ea5c47f0eea",
+    "routed_drc.rpt": "b99081fc5fd126f6dd90ba0a0d72429fb5e722275646b0b75749171b1ad2a87d",
+    "check_timing.rpt": "55bb01694dd93d36162e6e931508dcf9ddfe4c1c53698d303e5b7a03bab9b816",
+    "tool_warnings.txt": "2da894d3749f954e3bde6d67f8816119efb742eaddc30a1e5d72df35f5427a87"
+  },
+  "test_set_evaluated": false,
+  "board_programmed": false,
+  "timing_note": "Internal register-to-register timing passes. Unlocated OOC boundary timing is not closed; full reports and warnings are retained. No board timing or CPU speed claim."
+}

@@ -2,7 +2,7 @@
 
 Completed November 5, 2026. The model from [Step 2](step-02.md) now has an integer-only inference reference, exported FPGA memory files, and independently checked intermediate test vectors.
 
-No retraining was needed. This is post-training quantization: represent each learned floating-point parameter as an integer with a fixed scale. The official test set remains unused. RTL simulation, synthesis, timing, and board measurements belong to the next steps.
+No retraining was needed. This is post-training quantization: represent each learned floating-point parameter as an integer with a fixed scale. The official test set remains unused. [Step 4](step-04.md) now records RTL simulation and standalone implementation checks; board integration and measurements remain upcoming.
 
 ## What fixed-point means
 
@@ -189,9 +189,9 @@ Export a reproduction to three new directories:
 
 The exporter refuses to overwrite nonempty output directories. Both commands default to results/cnn-8filters as the floating-point source; --run-dir selects another compatible, fully verified CNN run. Validation predictions are checked against that run's saved predictions.
 
-## Next: Step 4, Verilog inference
+## Continue to Step 4: Verilog inference
 
-Implement and simulate signed multiplication/accumulation, convolution addressing, activation rescaling, pooling, dense inference, and argmax.
+The [Step 4 walkthrough](step-04.md) implements and simulates signed multiplication/accumulation, convolution addressing, activation rescaling, pooling, dense inference, and argmax.
 
 Use the exported vectors to compare each stage exactly, beginning with convolution accumulators rather than only comparing the final predicted character. After software/RTL agreement, synthesize for the Nexys A7 and measure resource use and timing. UART and display integration follow afterward.
 
